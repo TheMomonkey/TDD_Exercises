@@ -4,7 +4,7 @@ def min(a,b):
 
 	Returns minimum between a and b
 	"""
-	return -1
+	return a if a < b else b
 
 def mean(A):
 	"""
