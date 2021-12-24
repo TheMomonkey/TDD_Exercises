@@ -38,9 +38,10 @@ class EX1FuncsTestCase(unittest.TestCase):
 		self.assertEqual(EX1_funcs.is_arith_progression([1,12,23,34]),True)
 		self.assertEqual(EX1_funcs.is_arith_progression([6,3,0,-3]),True)
 
+	# By convention, common ratio can't be equal to 0
 	def test_is_geo_progression(self):
 		self.assertEqual(EX1_funcs.is_geo_progression([]),None)
-		self.assertEqual(EX1_funcs.is_geo_progression([0,0,0]),True)
+		self.assertEqual(EX1_funcs.is_geo_progression([0,0,0]),False)
 		self.assertEqual(EX1_funcs.is_geo_progression([2]),True)
 		self.assertEqual(EX1_funcs.is_geo_progression([-2,-6,-18,-54]),True)
 		self.assertEqual(EX1_funcs.is_geo_progression([1,-1,1,-1]),True)
