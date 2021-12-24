@@ -79,7 +79,23 @@ def is_geo_progression(A):
 
 	Returns whether A follows or not an geometric progression
 	"""
-	return False
+	l = len(A)
+	if not l:
+		return
+	if l == 1 and A[0]:
+		return True
+	if 0 in A:
+		return False
+
+	r = A[1] / A[0] # common ratio
+	previous = A[1]
+
+	for current in A[2:]:
+		if current / previous != r:
+			return False
+		previous = current
+		
+	return True
 
 def next_arith_progression(n,A):
 	"""
