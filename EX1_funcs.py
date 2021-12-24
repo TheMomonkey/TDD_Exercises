@@ -118,4 +118,11 @@ def next_geo_progression(n,A):
 
 	Returns whether A follows or not an arithmetic progression and if so, the next n elements
 	"""
-	return False, [-1.0]
+	l = len(A)
+	if not l:
+		return (None,None)
+
+	ans = is_geo_progression(A)
+	ratio = A[1] / A[0] if l > 1 and ans else 1
+
+	return ans, [A[-1] * (ratio ** i) for i in range(1,n+1)] if ans else []
