@@ -24,7 +24,7 @@ class EX1FuncsTestCase(unittest.TestCase):
 
 	def test_std_deviation(self):
 		self.assertEqual(EX1_funcs.std_deviation([]),None)
-		self.assertAlmostEqual(EX1_funcs.std_deviation([-3,2,5,0,0,2,18]),6.36636,places=5)
+		self.assertAlmostEqual(EX1_funcs.std_deviation([-3,2,5,0,0,2,18]),6.366365,places=5)
 		self.assertEqual(EX1_funcs.std_deviation([12]),0)
 		self.assertEqual(EX1_funcs.std_deviation([-42,-42]),0)
 		self.assertEqual(EX1_funcs.std_deviation([-2,2]),2)
