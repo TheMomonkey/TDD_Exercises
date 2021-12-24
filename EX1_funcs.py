@@ -1,3 +1,5 @@
+import math
+
 def min(a,b):
 	"""
 	`int, int --> int`
@@ -39,7 +41,15 @@ def std_deviation(A):
 
 	Returns standard deviation of A
 	"""
-	return -1.0
+
+	if not len(A):
+		return
+
+	moy = mean(A)
+	dev = [x - moy for x in A]
+	dev = [x*x for x in dev]
+	var = sum(dev)/len(A)
+	return math.sqrt(var)
 
 def is_arith_progression(A):
 	"""
