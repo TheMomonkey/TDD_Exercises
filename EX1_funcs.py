@@ -12,7 +12,8 @@ def mean(A):
 
 	Returns arithmetic mean of A
 	"""
-	return -1.0
+	if len(A):
+		return 1.0*sum(A)/len(A)
 
 def median(A):
 	"""
