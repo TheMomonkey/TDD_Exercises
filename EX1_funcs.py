@@ -103,7 +103,14 @@ def next_arith_progression(n,A):
 
 	Returns whether A follows or not an arithmetic progression and if so, the next n elements
 	"""
-	return False, [-1.0]
+	l = len(A)
+	if not l:
+		return (None,None)
+
+	ans = is_arith_progression(A)
+	diff = A[1] - A[0] if l > 1 else 0
+
+	return ans, [A[-1] + i * diff for i in range(1,n+1)] if ans else []
 
 def next_geo_progression(n,A):
 	"""
