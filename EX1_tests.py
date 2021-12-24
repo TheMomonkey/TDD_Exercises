@@ -64,8 +64,8 @@ class EX1FuncsTestCase(unittest.TestCase):
 
 	def test_next_geo_progression(self):
 		self.assertEqual(EX1_funcs.next_geo_progression(12,[]),(None,None))
-		self.assertEqual(EX1_funcs.next_geo_progression(0,[0,0,0]),(True,[]))		
-		self.assertEqual(EX1_funcs.next_geo_progression(1,[0,0,0]),(True,[0]))
+		self.assertEqual(EX1_funcs.next_geo_progression(0,[0,0,0]),(False,[]))		
+		self.assertEqual(EX1_funcs.next_geo_progression(1,[0,0,0]),(False,[]))
 		self.assertEqual(EX1_funcs.next_geo_progression(0,[2]),(True,[]))		
 		self.assertEqual(EX1_funcs.next_geo_progression(3,[2]),(True,[2,2,2]))
 		self.assertEqual(EX1_funcs.next_geo_progression(0,[-2,-6,-18,-54]),(True,[]))		
