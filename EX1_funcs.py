@@ -31,9 +31,9 @@ def median(A):
 	l = len(A)
 
 	if l % 2:
-		return A[l / 2]
+		return A[l//2]
 	else:
-		return (A[l/2 - 1] + A[l/2])/2. 
+		return (A[l//2 - 1] + A[l//2])/2. 
 
 def std_deviation(A):
 	"""
@@ -57,7 +57,21 @@ def is_arith_progression(A):
 
 	Returns whether A follows or not an arithmetic progression
 	"""
-	return False
+	l = len(A)
+	if not l:
+		return
+	if l == 1:
+		return True
+
+	diff = A[1] - A[0] # common difference
+	previous = A[1]
+
+	for current in A[2:]:
+		if current - previous != diff:
+			return False
+		previous = current
+		
+	return True
 
 def is_geo_progression(A):
 	"""
