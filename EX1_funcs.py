@@ -21,7 +21,17 @@ def median(A):
 
 	Returns median value of A
 	"""
-	return -1.0
+	
+	if not len(A):
+		return
+
+	A.sort()
+	l = len(A)
+
+	if l % 2:
+		return A[l / 2]
+	else:
+		return (A[l/2 - 1] + A[l/2])/2. 
 
 def std_deviation(A):
 	"""
