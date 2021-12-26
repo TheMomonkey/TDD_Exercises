@@ -53,8 +53,32 @@ class EX2FuncsTestCase(unittest.TestCase):
         self.assertEqual(EX2_funcs.login('jean33', 'Ef655fl$'), False)
         self.assertEqual(EX2_funcs.login('marc64', 'lrkjgm'), False)
 
-#    def test_getkey(self):
-#        self.assertEqual(_, _)
+    def test_get_spub_key(self):
+        i = 0
+        for user in c.execute('SELECT * FROM Utilisateurs'):
+            self.assertEqual(EX2_funcs.get_spub_key(user['username']), user['spublickey'])
+            i += 1
+
+
+    def test_get_epub_key(self):
+        i = 0
+        for user in c.execute('SELECT * FROM Utilisateurs'):
+            self.assertEqual(EX2_funcs.get_epub_key(user['username']), user['epublickey'])
+            i += 1
+
+
+    def test_get_spriv_key(self):
+        i = 0
+        for user in c.execute('SELECT * FROM Utilisateurs'):
+            self.assertEqual(EX2_funcs.get_spriv_key(user['username']), user['sprivatekey'])
+            i += 1
+
+
+    def test_get_epriv_key(self):
+        i = 0
+        for user in c.execute('SELECT * FROM Utilisateurs'):
+            self.assertEqual(EX2_funcs.get_epriv_key(user['username']), user['eprivatekey'])
+            i += 1
 
 #    def test_check(self):
 #        self.assertEqual(_, _)

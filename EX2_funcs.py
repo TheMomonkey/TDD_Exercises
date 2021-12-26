@@ -11,7 +11,16 @@ def add(username, password, spub, spriv, epub, epriv):
 def login(username, password):
 	return
 
-def getkey(username, password, spub, spriv, epub, epriv):
+def get_spub_key  (username):
+	return
+
+def get_spriv_key (username):
+	return
+
+def get_epub_key  (username):
+	return
+
+def get_epriv_key (username):
 	return
 
 def check(username, password, spub, spriv, epub, epriv):
