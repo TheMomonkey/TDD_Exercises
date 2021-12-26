@@ -23,5 +23,5 @@ def get_epub_key  (username):
 def get_epriv_key (username):
 	return
 
-def check(username, password, spub, spriv, epub, epriv):
+def check(username):
 	return

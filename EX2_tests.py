@@ -2,6 +2,7 @@ import sqlite3, random, string
 import EX2_funcs
 import unittest
 
+
 conn = sqlite3.connect('db_test.db')
 conn.row_factory = sqlite3.Row
 c = conn.cursor()
@@ -80,8 +81,84 @@ class EX2FuncsTestCase(unittest.TestCase):
             self.assertEqual(EX2_funcs.get_epriv_key(user['username']), user['eprivatekey'])
             i += 1
 
-#    def test_check(self):
-#        self.assertEqual(_, _)
+    def test_check(self):
+        self.assertEqual(EX2_funcs.check(), 0) # 0 => aucun probleme
+
+        # Rule : username has to be unique
+        c.execute("INSERT INTO Utilisateurs (username, password, spublickey, sprivatekey, epublickey, eprivatekey) VALUES('" + 'jean32' + "', '" + 'password_test1' + "', '" + gen_random_str(128) + "', '" + gen_random_str(128) + "', '" + gen_random_str(128) + "', '" + gen_random_str(128) + "')")
+        self.assertEqual(EX2_funcs.check(), 1) # 1 => probleme
+        c.execute("DELETE FROM Utilisateurs WHERE password='password_test1'")
+        self.assertEqual(EX2_funcs.check(), 0)
+
+        # Rule : username has to be at least 3 char long
+        c.execute("INSERT INTO Utilisateurs (username, password, spublickey, sprivatekey, epublickey, eprivatekey) VALUES('" + 'ab' + "', '" + 'Ef655fl$' + "', '" + gen_random_str(128) + "', '" + gen_random_str(128) + "', '" + gen_random_str(128) + "', '" + gen_random_str(128) + "')")
+        self.assertEqual(EX2_funcs.check(), 1)
+        c.execute("DELETE FROM Utilisateurs WHERE username='ab'")
+        self.assertEqual(EX2_funcs.check(), 0)
+
+        # Rule : username cant have special caracters
+        c.execute("INSERT INTO Utilisateurs (username, password, spublickey, sprivatekey, epublickey, eprivatekey) VALUES('" + 'op&b' + "', '" + 'Ef655fl$' + "', '" + gen_random_str(128) + "', '" + gen_random_str(128) + "', '" + gen_random_str(128) + "', '" + gen_random_str(128) + "')")
+        self.assertEqual(EX2_funcs.check(), 1)
+        c.execute("DELETE FROM Utilisateurs WHERE username='op&b'")
+        self.assertEqual(EX2_funcs.check(), 0)
+
+        # Rule : password has to be at least 8 char long
+        c.execute("INSERT INTO Utilisateurs (username, password, spublickey, sprivatekey, epublickey, eprivatekey) VALUES('" + 'passwordtestcase' + "', '" + 'Ef6$' + "', '" + gen_random_str(128) + "', '" + gen_random_str(128) + "', '" + gen_random_str(128) + "', '" + gen_random_str(128) + "')")
+        self.assertEqual(EX2_funcs.check(), 1)
+        c.execute("DELETE FROM Utilisateurs WHERE username='passwordtestcase'")
+        self.assertEqual(EX2_funcs.check(), 0)
+
+        # Rule : password must contain at least one uppercase letter
+        c.execute("INSERT INTO Utilisateurs (username, password, spublickey, sprivatekey, epublickey, eprivatekey) VALUES('" + 'passwordtestcase' + "', '" + 'ab#$%/mn54b' + "', '" + gen_random_str(128) + "', '" + gen_random_str(128) + "', '" + gen_random_str(128) + "', '" + gen_random_str(128) + "')")
+        self.assertEqual(EX2_funcs.check(), 1)
+        c.execute("DELETE FROM Utilisateurs WHERE username='passwordtestcase'")
+        self.assertEqual(EX2_funcs.check(), 0)
+
+        # Rule : password must contain at least one special caracter
+        c.execute("INSERT INTO Utilisateurs (username, password, spublickey, sprivatekey, epublickey, eprivatekey) VALUES('" + 'passwordtestcase' + "', '" + 'AbCdEf123' + "', '" + gen_random_str(128) + "', '" + gen_random_str(128) + "', '" + gen_random_str(128) + "', '" + gen_random_str(128) + "')")
+        self.assertEqual(EX2_funcs.check(), 1)
+        c.execute("DELETE FROM Utilisateurs WHERE username='passwordtestcase'")
+        self.assertEqual(EX2_funcs.check(), 0)
+
+        # Rule : password must contain at least one number
+        c.execute("INSERT INTO Utilisateurs (username, password, spublickey, sprivatekey, epublickey, eprivatekey) VALUES('" + 'passwordtestcase' + "', '" + 'aaBB$%$&mnb' + "', '" + gen_random_str(128) + "', '" + gen_random_str(128) + "', '" + gen_random_str(128) + "', '" + gen_random_str(128) + "')")
+        self.assertEqual(EX2_funcs.check(), 1)
+        c.execute("DELETE FROM Utilisateurs WHERE username='passwordtestcase'")
+        self.assertEqual(EX2_funcs.check(), 0)
+
+        # Rule : password must contain at least one lowercase letter
+        c.execute("INSERT INTO Utilisateurs (username, password, spublickey, sprivatekey, epublickey, eprivatekey) VALUES('" + 'passwordtestcase' + "', '" + 'GFH/&(1684JJ' + "', '" + gen_random_str(128) + "', '" + gen_random_str(128) + "', '" + gen_random_str(128) + "', '" + gen_random_str(128) + "')")
+        self.assertEqual(EX2_funcs.check(), 1)
+        c.execute("DELETE FROM Utilisateurs WHERE username='passwordtestcase'")
+        self.assertEqual(EX2_funcs.check(), 0)
+
+        # Rule : spublickey be exactly 128 char long
+        c.execute("INSERT INTO Utilisateurs (username, password, spublickey, sprivatekey, epublickey, eprivatekey) VALUES('" + 'passwordtestcase' + "', '" + 'GFH/&(1684jj' + "', '" + gen_random_str(12) + "', '" + gen_random_str(128) + "', '" + gen_random_str(128) + "', '" + gen_random_str(128) + "')")
+        self.assertEqual(EX2_funcs.check(), 1)
+        c.execute("DELETE FROM Utilisateurs WHERE username='passwordtestcase'")
+        self.assertEqual(EX2_funcs.check(), 0)
+
+        # Rule : sprivatekey be exactly 128 char long
+        c.execute("INSERT INTO Utilisateurs (username, password, spublickey, sprivatekey, epublickey, eprivatekey) VALUES('" + 'passwordtestcase' + "', '" + 'GFH/&(1684jj' + "', '" + gen_random_str(128) + "', '" + gen_random_str(150) + "', '" + gen_random_str(128) + "', '" + gen_random_str(128) + "')")
+        self.assertEqual(EX2_funcs.check(), 1)
+        c.execute("DELETE FROM Utilisateurs WHERE username='passwordtestcase'")
+        self.assertEqual(EX2_funcs.check(), 0)
+
+        # Rule : epublickey be exactly 128 char long
+        c.execute("INSERT INTO Utilisateurs (username, password, spublickey, sprivatekey, epublickey, eprivatekey) VALUES('" + 'passwordtestcase' + "', '" + 'GFH/&(1684jj' + "', '" + gen_random_str(128) + "', '" + gen_random_str(128) + "', '" + gen_random_str(12) + "', '" + gen_random_str(128) + "')")
+        self.assertEqual(EX2_funcs.check(), 1)
+        c.execute("DELETE FROM Utilisateurs WHERE username='passwordtestcase'")
+        self.assertEqual(EX2_funcs.check(), 0)
+
+        # Rule : eprivatekey be exactly 128 char long
+        c.execute("INSERT INTO Utilisateurs (username, password, spublickey, sprivatekey, epublickey, eprivatekey) VALUES('" + 'passwordtestcase' + "', '" + 'GFH/&(1684jj' + "', '" + gen_random_str(128) + "', '" + gen_random_str(128) + "', '" + gen_random_str(128) + "', '" + gen_random_str(150) + "')")
+        self.assertEqual(EX2_funcs.check(), 1)
+        c.execute("DELETE FROM Utilisateurs WHERE username='passwordtestcase'")
+        self.assertEqual(EX2_funcs.check(), 0)
+
+
+
+
 
 if __name__ == '__main__':
     unittest.main()
