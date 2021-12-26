@@ -19,16 +19,40 @@ def login(username, password):
 	return False
 
 def get_spub_key  (username):
-	return
+
+	c.execute("SELECT * FROM Utilisateurs WHERE username='" + username + "'")
+	user = c.fetchone()
+
+	if user:
+		return user['spublickey']
+	#print("Utilisateur " + username + " non trouvé")
 
 def get_spriv_key (username):
-	return
+
+	c.execute("SELECT * FROM Utilisateurs WHERE username='" + username + "'")
+	user = c.fetchone()
+
+	if user:
+		return user['sprivatekey']
+	#print("Utilisateur " + username + " non trouvé")
 
 def get_epub_key  (username):
-	return
+
+	c.execute("SELECT * FROM Utilisateurs WHERE username='" + username + "'")
+	user = c.fetchone()
+
+	if user:
+		return user['epublickey']
+	#print("Utilisateur " + username + " non trouvé")
 
 def get_epriv_key (username):
-	return
+
+	c.execute("SELECT * FROM Utilisateurs WHERE username='" + username + "'")
+	user = c.fetchone()
+
+	if user:
+		return user['eprivatekey']
+	#print("Utilisateur " + username + " non trouvé")
 
 def check():
 	return

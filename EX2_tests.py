@@ -59,6 +59,8 @@ class EX2FuncsTestCase(unittest.TestCase):
         for user in c.execute('SELECT * FROM Utilisateurs'):
             self.assertEqual(EX2_funcs.get_spub_key(user['username']), user['spublickey'])
             i += 1
+        self.assertEqual(EX2_funcs.get_spub_key(user['username']), user['spublickey'])
+
 
 
     def test_get_epub_key(self):
@@ -66,6 +68,8 @@ class EX2FuncsTestCase(unittest.TestCase):
         for user in c.execute('SELECT * FROM Utilisateurs'):
             self.assertEqual(EX2_funcs.get_epub_key(user['username']), user['epublickey'])
             i += 1
+        self.assertEqual(EX2_funcs.get_epub_key("non_existing_user"), None)
+
 
 
     def test_get_spriv_key(self):
@@ -73,6 +77,8 @@ class EX2FuncsTestCase(unittest.TestCase):
         for user in c.execute('SELECT * FROM Utilisateurs'):
             self.assertEqual(EX2_funcs.get_spriv_key(user['username']), user['sprivatekey'])
             i += 1
+        self.assertEqual(EX2_funcs.get_spriv_key("non_existing_user"), None)
+
 
 
     def test_get_epriv_key(self):
@@ -80,6 +86,8 @@ class EX2FuncsTestCase(unittest.TestCase):
         for user in c.execute('SELECT * FROM Utilisateurs'):
             self.assertEqual(EX2_funcs.get_epriv_key(user['username']), user['eprivatekey'])
             i += 1
+        self.assertEqual(EX2_funcs.get_epriv_key("non_existing_user"), None)
+
 
     def test_check(self):
         self.assertEqual(EX2_funcs.check(), 0) # 0 => aucun probleme
