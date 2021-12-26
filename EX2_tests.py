@@ -6,6 +6,7 @@ conn = sqlite3.connect('db_test.db')
 conn.row_factory = sqlite3.Row
 c = conn.cursor()
 
+#python3
 def gen_random_str(size):
     return ''.join(random.choices(string.ascii_uppercase + string.digits, k=size))
 
@@ -16,8 +17,8 @@ class EX2FuncsTestCase(unittest.TestCase):
     
     def test_add(self):
         
-        usernames = ['jean32', 'pierre46', 'jacques55', 'thomas15', 'philippe12']
-        passwords = ['ef655f', 'e1f24ef2', 'wf846s5s3', '2dwv68v6', '5vs61r8ev6']
+        usernames = ['jean32',   'pierre46', 'jacques55', 'thomas15', 'philippe12']
+        passwords = ['Ef655fl$', 'e1&24eF2', 'wF846S5_3', '&dWv68V6', '5Bs61r8ev#']
         spub      = []
         spriv     = []
         epub      = []
@@ -42,8 +43,15 @@ class EX2FuncsTestCase(unittest.TestCase):
             self.assertEqual(user['epublickey'], epub[i])
             i+=1
 
-#    def test_login(self):
-#        self.assertEqual(_, _)
+    def test_login(self):
+        self.assertEqual(EX2_funcs.login('jean32', 'Ef655fl$'), True)
+        self.assertEqual(EX2_funcs.login('pierre46', 'e1&24eF2'), True)
+        self.assertEqual(EX2_funcs.login('jacques55', 'wF846S5_3'), True)
+        self.assertEqual(EX2_funcs.login('thomas15', '&dWv68V6'), True)
+        self.assertEqual(EX2_funcs.login('philippe12', '5Bs61r8ev#'), True)
+        self.assertEqual(EX2_funcs.login('philippe12', 'bonjour'), False)
+        self.assertEqual(EX2_funcs.login('jean33', 'Ef655fl$'), False)
+        self.assertEqual(EX2_funcs.login('marc64', 'lrkjgm'), False)
 
 #    def test_getkey(self):
 #        self.assertEqual(_, _)
